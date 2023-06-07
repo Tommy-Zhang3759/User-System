@@ -9,15 +9,12 @@
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 #include <windows.h>
 #elif defined(__linux__)
-//#error
+#error
 #endif
-#if !(defined(ASKII_GS) || defined(ASKII_RS) || defined(ASKII_US))
+
 #define ASKII_GS 0x1D
 #define ASKII_RS 0x1E
 #define ASKII_US 0x1F
-#else
-#error
-#endif
 
 using namespace std;
 
@@ -48,6 +45,8 @@ constexpr hash_t basis = 0xCBF29CE484222325ull;
 string _stdcall usersys_hash_cookie(string name, string password) {
 #elif defined(__linux__)
 string __attribute__((__stdcall__)) usersys_hash_cookie(string name, string password) {
+#else
+string usersys_hash_cookie(string name, string password) {
 #endif
 	int logTime = clock() * (clock() % 10);
 	name = name + to_string(logTime) + password;
@@ -345,8 +344,9 @@ void DFS2(treeNode* treenode, lineNode* &linenode, int &offset) {
 lineNode* _stdcall Heavy_path_decomposition(treeNode* Node) {
 #elif defined(__linux__)
 lineNode* __attribute__((__stdcall__)) Heavy_path_decomposition(treeNode * Node) {
+#else
+lineNode* Heavy_path_decomposition(treeNode* Node) {
 #endif
-
 	lineNode* line = new lineNode;
 	lineNode* line_ret = line;
 	int offset = 0;
@@ -400,7 +400,7 @@ bool usersys_writeWholeTreeToTheHardDrive(treeNode *usertree) {
 }
 
 #elif(__linux__)
-//#error
+#error
 #endif
 
 int main() {
